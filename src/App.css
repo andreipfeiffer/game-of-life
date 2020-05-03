@@ -47,3 +47,13 @@ hr {
   background-color: black;
   margin: 2em 0;
 }
+
+.playing {
+  pointer-events: none;
+}
+
+button.secondary {
+  font-weight: normal;
+  border-color: #666666;
+  color: #666666;
+}

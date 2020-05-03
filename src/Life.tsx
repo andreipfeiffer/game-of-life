@@ -4,21 +4,30 @@ import "./Life.css";
 
 interface Props {
   population: Grid;
+  onToggle(x: number, y: number): void;
 }
 
 function Life(props: Props) {
-  const { population } = props;
+  const { population, onToggle } = props;
 
   return (
-    <table className="life">{population.map((row) => renderRow(row))}</table>
+    <table className="life">
+      <tbody>{population.map((row, y) => renderRow(row, y))}</tbody>
+    </table>
   );
 
-  function renderRow(row: boolean[]) {
-    return <tr>{row.map((cell) => renderCell(cell))}</tr>;
+  function renderRow(row: boolean[], y: number) {
+    return <tr key={y}>{row.map((cell, x) => renderCell(cell, x, y))}</tr>;
   }
 
-  function renderCell(alive: boolean) {
-    return <td className={`cell${alive ? " cell-alive" : ""}`}></td>;
+  function renderCell(alive: boolean, x: number, y: number) {
+    return (
+      <td
+        key={`${y}${x}`}
+        className={`cell${alive ? " cell-alive" : ""}`}
+        onClick={() => onToggle(x, y)}
+      ></td>
+    );
   }
 }
 

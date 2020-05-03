@@ -14,3 +14,10 @@
 .cell-alive {
   background-color: black;
 }
+
+.cell:hover {
+  background-color: #ddd;
+}
+.cell-alive:hover {
+  background-color: #444;
+}

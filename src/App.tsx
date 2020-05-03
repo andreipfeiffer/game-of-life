@@ -13,39 +13,21 @@ function App(props: Props) {
   const { presets } = props;
 
   const [play, setPlay] = React.useState(true);
-  const [lifetime, setLifetime] = React.useState(1000);
+  const [lifetime, setLifetime] = React.useState(500);
   const [width, setWidth] = React.useState(presets[0].grid[0].length);
   const [height, setHeight] = React.useState(presets[0].grid.length);
-
   const [preset, setPreset] = React.useState(presets[0].id);
-
   const [population, setPopulation] = React.useState<Grid>(
     getInitialState(presets[0].grid, width, height)
   );
 
   useInterval(tick, play ? lifetime : null);
 
-  function tick() {
-    setPopulation(getNextPopulation(population));
-  }
-
-  function updateWidth(newWidth: number) {
-    setWidth(newWidth);
-    setPreset("");
-    setPopulation(getInitialState(population, newWidth, height));
-  }
-
-  function updateHeight(newHeight: number) {
-    setHeight(newHeight);
-    setPreset("");
-    setPopulation(getInitialState(population, width, newHeight));
-  }
-
   return (
     <div>
       Preset:{" "}
       <select value={preset} onChange={(e) => loadPreset(e.target.value)}>
-        <option value="">Presets</option>
+        <option value="">Select a preset</option>
         {presets.map((preset) => (
           <option key={preset.id} value={preset.id}>
             {preset.description}
@@ -83,10 +65,33 @@ function App(props: Props) {
       <button onClick={() => setPlay(!play)}>
         {play ? "Stop" : "Play"}
       </button>{" "}
+      {play === false && (
+        <button onClick={output} className="secondary">
+          Output
+        </button>
+      )}{" "}
       <hr />
-      <Life population={population} />
+      <div className={`${play ? "playing" : ""}`}>
+        <Life population={population} onToggle={toggleCell} />
+      </div>
     </div>
   );
+
+  function tick() {
+    setPopulation(getNextPopulation(population));
+  }
+
+  function updateWidth(newWidth: number) {
+    setWidth(newWidth);
+    setPreset("");
+    setPopulation(getInitialState(population, newWidth, height));
+  }
+
+  function updateHeight(newHeight: number) {
+    setHeight(newHeight);
+    setPreset("");
+    setPopulation(getInitialState(population, width, newHeight));
+  }
 
   function loadPreset(id: string) {
     const newPreset = presets.find((p) => p.id === id);
@@ -94,6 +99,27 @@ function App(props: Props) {
     setWidth(newPreset?.width || width);
     setPopulation(newPreset?.grid || population);
     setPreset(id);
+  }
+
+  function toggleCell(x: number, y: number) {
+    if (play) {
+      return;
+    }
+
+    const newRow = [...population[y]];
+    newRow[x] = !newRow[x];
+    const newPopulation = [
+      ...population.slice(0, y),
+      newRow,
+      ...population.slice(y + 1),
+    ];
+
+    setPopulation(newPopulation);
+    setPreset("");
+  }
+
+  function output() {
+    console.log(JSON.stringify(population));
   }
 }
 
