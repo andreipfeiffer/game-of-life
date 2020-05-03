@@ -1,0 +1,6 @@
+pre {
+  font-size: 30px;
+  font-weight: bold;
+  border: 1px black solid;
+  display: inline-block;
+}
