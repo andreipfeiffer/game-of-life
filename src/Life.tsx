@@ -15,19 +15,11 @@ function Life(props: Props) {
   const { population, size, onToggle } = props;
 
   return (
-    <table className={`life ${size < SIZE_LIMIT ? "life-border" : ""}`}>
-      <tbody>
-        {population.map((row, y) => (
-          <OptimizedRow
-            key={y}
-            row={row}
-            y={y}
-            size={size}
-            onToggle={onToggle}
-          />
-        ))}
-      </tbody>
-    </table>
+    <div className={`life ${size < SIZE_LIMIT ? "life-border" : ""}`}>
+      {population.map((row, y) => (
+        <OptimizedRow key={y} row={row} y={y} size={size} onToggle={onToggle} />
+      ))}
+    </div>
   );
 }
 
@@ -41,18 +33,18 @@ interface RowProps {
 function Row(props: RowProps) {
   const { y, size, row, onToggle } = props;
   return (
-    <tr key={y}>
+    <div key={y} className="row">
       {row.map((cell, x) => (
-        <td
+        <span
           key={`${y}${x}`}
           className={`cell ${!!cell ? "cell-alive" : ""} ${
             size < SIZE_LIMIT ? "no-border" : ""
           }`}
           onClick={() => onToggle(x, y)}
           style={{ width: size, height: size }}
-        ></td>
+        ></span>
       ))}
-    </tr>
+    </div>
   );
 }
 

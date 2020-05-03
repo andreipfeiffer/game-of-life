@@ -1,12 +1,21 @@
 .life {
   border-collapse: collapse;
   font-size: 0;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
 }
 .life-border {
   border: 1px black solid;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 .cell {
+  display: inline-block;
   background-color: white;
   border: 1px black solid;
   margin: 1px;
