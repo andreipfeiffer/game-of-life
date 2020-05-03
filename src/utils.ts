@@ -23,6 +23,7 @@ export function getNextPopulation(grid: Array<Array<any>>): Grid {
 
   for (let row = 0; row < grid.length; row += 1) {
     next[row] = [];
+    let isRowChanged = false;
 
     for (let col = 0; col < grid[row].length; col += 1) {
       const isAlive = !!grid[row][col];
@@ -36,6 +37,17 @@ export function getNextPopulation(grid: Array<Array<any>>): Grid {
       } else {
         next[row][col] = false;
       }
+
+      if (next[row][col] !== grid[row][col]) {
+        // mark that the row has changed
+        isRowChanged = true;
+      }
+    }
+
+    if (!isRowChanged) {
+      // copy row reference if it hasn't changed
+      // so it is optimized by React.memo()
+      next[row] = grid[row];
     }
   }
 

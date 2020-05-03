@@ -26,6 +26,8 @@ function App(props: Props) {
 
   useInterval(tick, play ? lifetime : null);
 
+  const optimizedToggleCell = React.useCallback(toggleCell, []);
+
   return (
     <div>
       Preset:{" "}
@@ -83,7 +85,11 @@ function App(props: Props) {
       )}{" "}
       <hr />
       <div className={`${play ? "playing" : ""}`}>
-        <Life population={population} onToggle={toggleCell} size={size} />
+        <Life
+          population={population}
+          onToggle={optimizedToggleCell}
+          size={size}
+        />
       </div>
     </div>
   );
