@@ -19,14 +19,20 @@ function App(props: Props) {
   const [width, setWidth] = React.useState(presets[0].grid[0].length);
   const [height, setHeight] = React.useState(presets[0].grid.length);
   const [size, setSize] = React.useState(30);
+  const [manualChange, increaseManualChange] = React.useState(0);
   const [preset, setPreset] = React.useState(presets[0].id);
+
   const [population, setPopulation] = React.useState<Grid>(
     getInitialState(presets[0].grid, width, height)
   );
 
   useInterval(tick, play ? lifetime : null);
 
-  const optimizedToggleCell = React.useCallback(toggleCell, []);
+  const optimizedToggleCell = React.useCallback(toggleCell, [
+    width,
+    height,
+    manualChange,
+  ]);
 
   return (
     <div>
@@ -127,12 +133,9 @@ function App(props: Props) {
   }
 
   function toggleCell(x: number, y: number) {
-    if (play) {
-      return;
-    }
-
     const newRow = [...population[y]];
     newRow[x] = !newRow[x];
+
     const newPopulation = [
       ...population.slice(0, y),
       newRow,
@@ -141,6 +144,7 @@ function App(props: Props) {
 
     setPopulation(newPopulation);
     setPreset("");
+    increaseManualChange(manualChange + 1);
   }
 
   function output() {
