@@ -10,6 +10,7 @@ interface Props {
 
 const SIZE_LIMIT = 15;
 const OptimizedRow = React.memo(Row);
+const OptimizedCell = React.memo(Cell);
 
 function Life(props: Props) {
   const { population, size, onToggle } = props;
@@ -35,16 +36,37 @@ function Row(props: RowProps) {
   return (
     <div key={y} className="row">
       {row.map((cell, x) => (
-        <span
+        <OptimizedCell
           key={`${y}${x}`}
-          className={`cell ${!!cell ? "cell-alive" : ""} ${
-            size < SIZE_LIMIT ? "no-border" : ""
-          }`}
-          onClick={() => onToggle(x, y)}
-          style={{ width: size, height: size }}
-        ></span>
+          x={x}
+          y={y}
+          onToggle={onToggle}
+          size={size}
+          alive={cell}
+        />
       ))}
     </div>
+  );
+}
+
+interface CellProps {
+  alive: boolean;
+  x: number;
+  y: number;
+  size: number;
+  onToggle(x: number, y: number): void;
+}
+
+function Cell(props: CellProps) {
+  const { alive, x, y, size, onToggle } = props;
+  return (
+    <span
+      className={`cell ${alive ? "cell-alive" : ""} ${
+        size < SIZE_LIMIT ? "no-border" : ""
+      }`}
+      onClick={() => onToggle(x, y)}
+      style={{ width: size, height: size }}
+    ></span>
   );
 }
 
