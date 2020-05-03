@@ -7,10 +7,10 @@
 }
 
 .cell {
-  display: inline-block;
   background-color: white;
   border: 1px black solid;
   margin: 1px;
+  padding: 0;
 }
 .cell-alive {
   background-color: black;
