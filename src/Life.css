@@ -1,0 +1,16 @@
+.life {
+  border-collapse: collapse;
+  font-size: 0;
+}
+
+.cell {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border: 1px black solid;
+  margin: 1px;
+}
+.cell-alive {
+  background-color: black;
+}

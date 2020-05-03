@@ -18,14 +18,6 @@ export function getInitialState(
   return result;
 }
 
-export function getStringGrid(grid: Grid): string {
-  return grid
-    .map((row) => {
-      return row.map((cell) => (cell ? "x" : " ")).join("");
-    })
-    .join("\n");
-}
-
 export function getNextPopulation(grid: Array<Array<any>>): Grid {
   const next: Grid = [];
 
@@ -44,14 +36,6 @@ export function getNextPopulation(grid: Array<Array<any>>): Grid {
       } else {
         next[row][col] = false;
       }
-
-      // console.log({
-      //   row,
-      //   col,
-      //   alive,
-      //   current: grid[row][col],
-      //   next: next[row][col],
-      // });
     }
   }
 

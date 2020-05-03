@@ -1,29 +1,27 @@
 import React from "react";
 import "./App.css";
 import { Grid, Preset } from "./types";
-import { getInitialState, getStringGrid, getNextPopulation } from "./utils";
+import { getInitialState, getNextPopulation } from "./utils";
 import { useInterval } from "./hooks";
+import Life from "./Life";
 
 interface Props {
-  start: Grid;
   presets: Preset[];
 }
 
 function App(props: Props) {
-  const { start, presets } = props;
+  const { presets } = props;
 
-  const [play, setPlay] = React.useState(false);
+  const [play, setPlay] = React.useState(true);
   const [lifetime, setLifetime] = React.useState(1000);
-  const [width, setWidth] = React.useState(start[0].length);
-  const [height, setHeight] = React.useState(start.length);
+  const [width, setWidth] = React.useState(presets[0].grid[0].length);
+  const [height, setHeight] = React.useState(presets[0].grid.length);
 
-  const [preset, setPreset] = React.useState("");
+  const [preset, setPreset] = React.useState(presets[0].id);
 
   const [population, setPopulation] = React.useState<Grid>(
-    getInitialState(start, width, height)
+    getInitialState(presets[0].grid, width, height)
   );
-
-  const stringGrid = getStringGrid(population);
 
   useInterval(tick, play ? lifetime : null);
 
@@ -33,33 +31,20 @@ function App(props: Props) {
 
   function updateWidth(newWidth: number) {
     setWidth(newWidth);
+    setPreset("");
     setPopulation(getInitialState(population, newWidth, height));
   }
 
   function updateHeight(newHeight: number) {
     setHeight(newHeight);
+    setPreset("");
     setPopulation(getInitialState(population, width, newHeight));
   }
 
   return (
     <div>
-      <button onClick={() => setPlay(!play)}>{play ? "Stop" : "Play"}</button>
-      <input
-        type="number"
-        value={lifetime}
-        onChange={(e) => setLifetime(+e.target.value)}
-      />
-      <input
-        type="number"
-        value={width}
-        onChange={(e) => updateWidth(+e.target.value)}
-      />
-      <input
-        type="number"
-        value={height}
-        onChange={(e) => updateHeight(+e.target.value)}
-      />
-      <select value={preset} onChange={(e) => setPreset(e.target.value)}>
+      Preset:{" "}
+      <select value={preset} onChange={(e) => loadPreset(e.target.value)}>
         <option value="">Presets</option>
         {presets.map((preset) => (
           <option key={preset.id} value={preset.id}>
@@ -67,17 +52,48 @@ function App(props: Props) {
           </option>
         ))}
       </select>
-      <button onClick={loadPreset}>Load preset</button>
       <br />
-      <pre>{stringGrid}</pre>
+      <br />
+      Cycle :{" "}
+      <input
+        type="number"
+        value={lifetime}
+        onChange={(e) => setLifetime(+e.target.value)}
+        maxLength={4}
+        className="input"
+      />{" "}
+      Width:{" "}
+      <input
+        type="number"
+        value={width}
+        onChange={(e) => updateWidth(+e.target.value)}
+        maxLength={3}
+        className="input"
+      />{" "}
+      Height:{" "}
+      <input
+        type="number"
+        value={height}
+        onChange={(e) => updateHeight(+e.target.value)}
+        maxLength={3}
+        className="input"
+      />{" "}
+      <br />
+      <br />
+      <button onClick={() => setPlay(!play)}>
+        {play ? "Stop" : "Play"}
+      </button>{" "}
+      <hr />
+      <Life population={population} />
     </div>
   );
 
-  function loadPreset() {
-    const newPreset = presets.find((p) => p.id === preset);
+  function loadPreset(id: string) {
+    const newPreset = presets.find((p) => p.id === id);
     setHeight(newPreset?.height || height);
     setWidth(newPreset?.width || width);
     setPopulation(newPreset?.grid || population);
+    setPreset(id);
   }
 }
 

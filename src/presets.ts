@@ -4,7 +4,7 @@ export function getPresets(): Preset[] {
   return [
     {
       id: "block",
-      description: "Block (Still lifes)",
+      description: "Block (Still life)",
       width: 4,
       height: 4,
       grid: [
@@ -29,7 +29,7 @@ export function getPresets(): Preset[] {
     },
     {
       id: "toad",
-      description: "Toad (period 2 oscillator)",
+      description: "Toad (period 2 Oscillator)",
       width: 6,
       height: 6,
       grid: [

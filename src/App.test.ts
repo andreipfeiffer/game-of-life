@@ -1,9 +1,4 @@
-import {
-  getInitialState,
-  getStringGrid,
-  getNextPopulation,
-  getNeighbors,
-} from "./utils";
+import { getInitialState, getNextPopulation, getNeighbors } from "./utils";
 
 describe("getInitialState()", () => {
   it("should return same size, when width and height match", () => {
@@ -15,24 +10,6 @@ describe("getInitialState()", () => {
       [true, false],
       [false, false],
     ]);
-  });
-});
-
-describe("getStringGrid()", () => {
-  it("should return 1/1 true", () => {
-    expect(getStringGrid([[true]])).toEqual(`x`);
-  });
-  it("should return 1/1 false", () => {
-    expect(getStringGrid([[false]])).toEqual(` `);
-  });
-  it("should return 2/2 false,true/true,false", () => {
-    expect(
-      getStringGrid([
-        [false, true],
-        [true, false],
-      ])
-    ).toEqual(` x
-x `);
   });
 });
 
