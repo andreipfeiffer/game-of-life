@@ -2,6 +2,8 @@
 
 Implementation of Conway's Game of Life: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
+[View Game](https://andreipfeiffer.github.io/game-of-life/)
+
 ## Available Scripts
 
 In the project directory, you can run:
