@@ -26,7 +26,7 @@ function App(props: Props) {
     getInitialState(presets[0].grid, width, height)
   );
 
-  useInterval(tick, play ? lifetime : null);
+  useInterval(nextGeneration, play ? lifetime : null);
 
   const optimizedToggleCell = React.useCallback(toggleCell, [
     width,
@@ -100,7 +100,7 @@ function App(props: Props) {
     </div>
   );
 
-  function tick() {
+  function nextGeneration() {
     setPopulation(getNextPopulation(population));
   }
 
