@@ -19,6 +19,8 @@ export function getInitialState(
 }
 
 export function getNextPopulation(grid: Array<Array<any>>): Grid {
+  window.performance.mark("calculateNextTickStart");
+
   const next: Grid = [];
 
   for (let row = 0; row < grid.length; row += 1) {
@@ -50,6 +52,13 @@ export function getNextPopulation(grid: Array<Array<any>>): Grid {
       next[row] = grid[row];
     }
   }
+
+  window.performance.mark("calculateNextTickEnd");
+  window.performance.measure(
+    "calculateNextTick",
+    "calculateNextTickStart",
+    "calculateNextTickEnd"
+  );
 
   return next;
 }
