@@ -9,6 +9,8 @@ interface Props {
   presets: Preset[];
 }
 
+const MIN_LENGTH = 4;
+
 function App(props: Props) {
   const { presets } = props;
 
@@ -16,6 +18,7 @@ function App(props: Props) {
   const [lifetime, setLifetime] = React.useState(500);
   const [width, setWidth] = React.useState(presets[0].grid[0].length);
   const [height, setHeight] = React.useState(presets[0].grid.length);
+  const [size, setSize] = React.useState(30);
   const [preset, setPreset] = React.useState(presets[0].id);
   const [population, setPopulation] = React.useState<Grid>(
     getInitialState(presets[0].grid, width, height)
@@ -60,6 +63,14 @@ function App(props: Props) {
         maxLength={3}
         className="input"
       />{" "}
+      Size:{" "}
+      <input
+        type="number"
+        value={size}
+        onChange={(e) => setSize(+e.target.value)}
+        maxLength={3}
+        className="input"
+      />{" "}
       <br />
       <br />
       <button onClick={() => setPlay(!play)}>
@@ -72,7 +83,7 @@ function App(props: Props) {
       )}{" "}
       <hr />
       <div className={`${play ? "playing" : ""}`}>
-        <Life population={population} onToggle={toggleCell} />
+        <Life population={population} onToggle={toggleCell} size={size} />
       </div>
     </div>
   );
@@ -81,13 +92,15 @@ function App(props: Props) {
     setPopulation(getNextPopulation(population));
   }
 
-  function updateWidth(newWidth: number) {
+  function updateWidth(value: number) {
+    const newWidth = Math.max(value, MIN_LENGTH);
     setWidth(newWidth);
     setPreset("");
     setPopulation(getInitialState(population, newWidth, height));
   }
 
-  function updateHeight(newHeight: number) {
+  function updateHeight(value: number) {
+    const newHeight = Math.max(value, MIN_LENGTH);
     setHeight(newHeight);
     setPreset("");
     setPopulation(getInitialState(population, width, newHeight));
@@ -95,10 +108,16 @@ function App(props: Props) {
 
   function loadPreset(id: string) {
     const newPreset = presets.find((p) => p.id === id);
-    setHeight(newPreset?.height || height);
-    setWidth(newPreset?.width || width);
-    setPopulation(newPreset?.grid || population);
+    const newWidth = Math.max(newPreset?.width ?? 0, width);
+    const newHeight = Math.max(newPreset?.height ?? 0, height);
+
+    setHeight(newHeight);
+    setWidth(newWidth);
     setPreset(id);
+
+    setPopulation(
+      getInitialState(newPreset?.grid || population, newWidth, newHeight)
+    );
   }
 
   function toggleCell(x: number, y: number) {
