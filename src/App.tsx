@@ -4,6 +4,7 @@ import { Grid, Preset } from "./types";
 import { getInitialState, getNextPopulation } from "./utils";
 import { useInterval } from "./hooks";
 import Life from "./Life";
+import LifeCanvas from "./LifeCanvas";
 
 interface Props {
   presets: Preset[];
@@ -12,10 +13,13 @@ interface Props {
 const MIN_LENGTH = 4;
 const DEFAULT_SIZE = 30;
 
+type Renderer = "html" | "canvas";
+
 function App(props: Props) {
   const { presets } = props;
 
   const [play, setPlay] = React.useState(true);
+  const [renderer, setRenderer] = React.useState<Renderer>("html");
   const [lifetime, setLifetime] = React.useState(500);
   const [width, setWidth] = React.useState(presets[0].grid[0].length);
   const [height, setHeight] = React.useState(presets[0].grid.length);
@@ -45,6 +49,17 @@ function App(props: Props) {
             {preset.description}
           </option>
         ))}
+      </select>
+      <select
+        value={renderer}
+        onChange={(e) => setRenderer(e.target.value as Renderer)}
+      >
+        <option key="html" value="html">
+          HTML
+        </option>
+        <option key="canvas" value="canvas">
+          Canvas
+        </option>
       </select>
       <br />
       <br />
@@ -92,11 +107,15 @@ function App(props: Props) {
       )}{" "}
       <hr />
       <div className={`${play ? "playing" : ""}`}>
-        <Life
-          population={population}
-          onToggle={optimizedToggleCell}
-          size={size}
-        />
+        {renderer === "canvas" ? (
+          <LifeCanvas population={population} size={size} />
+        ) : (
+          <Life
+            population={population}
+            onToggle={optimizedToggleCell}
+            size={size}
+          />
+        )}
       </div>
     </div>
   );
