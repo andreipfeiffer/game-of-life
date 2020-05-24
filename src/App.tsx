@@ -23,8 +23,6 @@ const LifetimeValues: Record<
   5: { value: 500, label: "0.5s" },
 });
 
-console.log(Object.keys(LifetimeValues).reverse()[1]);
-
 type Renderer = "html" | "canvas";
 
 function App(props: Props) {
@@ -155,8 +153,8 @@ function App(props: Props) {
 
   function loadPreset(id: string) {
     const newPreset = presets.find((p) => p.id === id);
-    const newWidth = Math.max(newPreset?.width ?? 0, width);
-    const newHeight = Math.max(newPreset?.height ?? 0, height);
+    const newWidth = newPreset?.width || width;
+    const newHeight = newPreset?.height || height;
     const newSize = newPreset?.size || DEFAULT_SIZE;
 
     setHeight(newHeight);
