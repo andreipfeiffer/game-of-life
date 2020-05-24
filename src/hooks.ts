@@ -1,6 +1,6 @@
 import React from "react";
 
-export function useInterval(callback: Function, delay: number | null) {
+export function useInterval(callback: Function, msDelay: number | null) {
   const savedCallback = React.useRef() as React.MutableRefObject<Function>;
 
   // Remember the latest function.
@@ -10,12 +10,22 @@ export function useInterval(callback: Function, delay: number | null) {
 
   // Set up the interval.
   React.useEffect(() => {
+    let id: number;
+
     function tick() {
       savedCallback.current();
+
+      if (msDelay !== null) {
+        id =
+          msDelay < 16
+            ? requestAnimationFrame(tick)
+            : +setTimeout(tick, msDelay);
+      }
     }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
+
+    if (msDelay !== null) {
+      tick();
+      return () => (msDelay < 16 ? cancelAnimationFrame(id) : clearTimeout(id));
     }
-  }, [delay, savedCallback]);
+  }, [msDelay, savedCallback]);
 }

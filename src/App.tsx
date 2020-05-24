@@ -12,6 +12,18 @@ interface Props {
 
 const MIN_LENGTH = 4;
 const DEFAULT_SIZE = 30;
+const LifetimeValues: Record<
+  number,
+  { value: number; label: string }
+> = Object.freeze({
+  1: { value: 1, label: "requestAnimationFrame()" },
+  2: { value: 16, label: "16ms" },
+  3: { value: 100, label: "100ms" },
+  4: { value: 300, label: "300ms" },
+  5: { value: 500, label: "0.5s" },
+});
+
+console.log(Object.keys(LifetimeValues).reverse()[1]);
 
 type Renderer = "html" | "canvas";
 
@@ -20,7 +32,9 @@ function App(props: Props) {
 
   const [play, setPlay] = React.useState(true);
   const [renderer, setRenderer] = React.useState<Renderer>("html");
-  const [lifetime, setLifetime] = React.useState(500);
+  const [lifetime, setLifetime] = React.useState(
+    +Object.keys(LifetimeValues).reverse()[0]
+  );
   const [width, setWidth] = React.useState(presets[0].grid[0].length);
   const [height, setHeight] = React.useState(presets[0].grid.length);
   const [size, setSize] = React.useState(presets[0].size || DEFAULT_SIZE);
@@ -31,7 +45,7 @@ function App(props: Props) {
     getInitialState(presets[0].grid, width, height)
   );
 
-  useInterval(nextGeneration, play ? lifetime : null);
+  useInterval(nextGeneration, play ? LifetimeValues[lifetime].value : null);
 
   const optimizedToggleCell = React.useCallback(toggleCell, [
     width,
@@ -53,6 +67,7 @@ function App(props: Props) {
       <select
         value={renderer}
         onChange={(e) => setRenderer(e.target.value as Renderer)}
+        style={{ marginLeft: "-1px" }}
       >
         <option key="html" value="html">
           HTML
@@ -60,17 +75,7 @@ function App(props: Props) {
         <option key="canvas" value="canvas">
           Canvas
         </option>
-      </select>
-      <br />
-      <br />
-      Cycle :{" "}
-      <input
-        type="number"
-        value={lifetime}
-        onChange={(e) => setLifetime(+e.target.value)}
-        maxLength={4}
-        className="input"
-      />{" "}
+      </select>{" "}
       Width:{" "}
       <input
         type="number"
@@ -97,14 +102,30 @@ function App(props: Props) {
       />{" "}
       <br />
       <br />
-      <button onClick={() => setPlay(!play)}>
-        {play ? "Stop" : "Play"}
-      </button>{" "}
-      {play === false && (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <button onClick={() => setPlay(!play)}>{play ? "Stop" : "Play"}</button>{" "}
+        {/* {play === false && (
         <button onClick={output} className="secondary">
           Output
         </button>
-      )}{" "}
+      )}{" "} */}
+        <input
+          type="range"
+          value={lifetime}
+          min={1}
+          max={5}
+          onChange={(e) => setLifetime(+e.target.value)}
+          list="lifetime-options"
+          // className="input"
+          style={{ margin: "0 1em" }}
+        />
+        <datalist id="lifetime-options">
+          {Object.entries(LifetimeValues).map(([k, v]) => (
+            <option key={k} value={k} label={v.label} />
+          ))}
+        </datalist>{" "}
+        <div>{LifetimeValues[lifetime].label}</div>
+      </div>
       <hr />
       <div className={`${play ? "playing" : ""}`}>
         {renderer === "canvas" ? (
@@ -170,9 +191,9 @@ function App(props: Props) {
     increaseManualChange(manualChange + 1);
   }
 
-  function output() {
-    console.log(JSON.stringify(population));
-  }
+  // function output() {
+  //   console.log(JSON.stringify(population));
+  // }
 }
 
 export default App;

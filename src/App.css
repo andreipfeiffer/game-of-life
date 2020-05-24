@@ -13,7 +13,11 @@ body {
   padding: 2rem;
 }
 
-input,
+html {
+  font-size: 14px;
+}
+
+input:not([type="range"]):not([type="checkbox"]),
 label,
 select,
 button,
