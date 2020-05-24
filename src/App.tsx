@@ -104,11 +104,6 @@ function App(props: Props) {
       <br />
       <div style={{ display: "flex", alignItems: "center" }}>
         <button onClick={() => setPlay(!play)}>{play ? "Stop" : "Play"}</button>{" "}
-        {/* {play === false && (
-        <button onClick={output} className="secondary">
-          Output
-        </button>
-      )}{" "} */}
         <input
           type="range"
           value={lifetime}
@@ -116,7 +111,6 @@ function App(props: Props) {
           max={5}
           onChange={(e) => setLifetime(+e.target.value)}
           list="lifetime-options"
-          // className="input"
           style={{ margin: "0 1em" }}
         />
         <datalist id="lifetime-options">
@@ -190,10 +184,6 @@ function App(props: Props) {
     setPreset("");
     increaseManualChange(manualChange + 1);
   }
-
-  // function output() {
-  //   console.log(JSON.stringify(population));
-  // }
 }
 
 export default App;
