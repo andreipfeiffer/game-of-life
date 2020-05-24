@@ -10,6 +10,7 @@ interface Props {
 }
 
 const MIN_LENGTH = 4;
+const DEFAULT_SIZE = 30;
 
 function App(props: Props) {
   const { presets } = props;
@@ -18,7 +19,7 @@ function App(props: Props) {
   const [lifetime, setLifetime] = React.useState(500);
   const [width, setWidth] = React.useState(presets[0].grid[0].length);
   const [height, setHeight] = React.useState(presets[0].grid.length);
-  const [size, setSize] = React.useState(30);
+  const [size, setSize] = React.useState(presets[0].size || DEFAULT_SIZE);
   const [manualChange, increaseManualChange] = React.useState(0);
   const [preset, setPreset] = React.useState(presets[0].id);
 
@@ -122,9 +123,12 @@ function App(props: Props) {
     const newPreset = presets.find((p) => p.id === id);
     const newWidth = Math.max(newPreset?.width ?? 0, width);
     const newHeight = Math.max(newPreset?.height ?? 0, height);
+    const newSize = newPreset?.size || DEFAULT_SIZE;
 
     setHeight(newHeight);
     setWidth(newWidth);
+    setWidth(newWidth);
+    setSize(newSize);
     setPreset(id);
 
     setPopulation(

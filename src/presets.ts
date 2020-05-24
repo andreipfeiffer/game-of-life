@@ -59,6 +59,7 @@ export function getPresets(): Preset[] {
       description: "The R-pentomino (Methuselahs)",
       width: 200,
       height: 100,
+      size: 3,
       grid: [
         [false],
         [false],

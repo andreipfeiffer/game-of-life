@@ -6,4 +6,5 @@ export type Preset = {
   width: number;
   height: number;
   grid: Grid;
+  size?: number;
 };
