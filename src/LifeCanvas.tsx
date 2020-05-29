@@ -31,9 +31,7 @@ function LifeCanvas(props: Props) {
         cell && ctx.fillRect(col * size, row * size, size, size);
       }
     }
-    // width & height depend on population, so no need to add them here
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size, population]);
+  });
 
   return (
     <canvas
