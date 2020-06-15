@@ -5,25 +5,24 @@ import "./Life.css";
 interface Props {
   population: Grid;
   size: number;
-  onToggle(x: number, y: number): void;
 }
 
-const SIZE_LIMIT = 15;
+const SIZE_THRESHOLD = 15;
 const OptimizedRow = React.memo(Row);
 const OptimizedCell = React.memo(Cell);
 
 function Life(props: Props) {
-  const { population, size, onToggle } = props;
+  const { population, size } = props;
 
   const style = { "--size": `${size}px` } as React.CSSProperties;
 
   return (
     <div
-      className={`life ${size < SIZE_LIMIT ? "small-size" : ""}`}
+      className={`life ${size < SIZE_THRESHOLD ? "small-size" : ""}`}
       style={style}
     >
       {population.map((row, y) => (
-        <OptimizedRow key={y} row={row} y={y} onToggle={onToggle} />
+        <OptimizedRow key={y} row={row} y={y} />
       ))}
     </div>
   );
@@ -32,21 +31,14 @@ function Life(props: Props) {
 interface RowProps {
   row: Array<boolean>;
   y: number;
-  onToggle(x: number, y: number): void;
 }
 
 function Row(props: RowProps) {
-  const { y, row, onToggle } = props;
+  const { row } = props;
   return (
-    <div key={y} className="row">
+    <div className="row">
       {row.map((cell, x) => (
-        <OptimizedCell
-          key={`${y}${x}`}
-          x={x}
-          y={y}
-          onToggle={onToggle}
-          alive={cell}
-        />
+        <OptimizedCell key={x} alive={cell} />
       ))}
     </div>
   );
@@ -54,19 +46,11 @@ function Row(props: RowProps) {
 
 interface CellProps {
   alive: boolean;
-  x: number;
-  y: number;
-  onToggle(x: number, y: number): void;
 }
 
 function Cell(props: CellProps) {
-  const { alive, x, y, onToggle } = props;
-  return (
-    <span
-      className={`cell ${alive ? "cell-alive" : ""}`}
-      onClick={() => onToggle(x, y)}
-    ></span>
-  );
+  const { alive } = props;
+  return <span className={`cell ${alive ? "cell-alive" : ""}`}></span>;
 }
 
 export default Life;
