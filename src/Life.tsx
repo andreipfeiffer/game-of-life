@@ -22,7 +22,7 @@ function Life(props: Props) {
       style={style}
     >
       {population.map((row, y) => (
-        <OptimizedRow key={y} row={row} y={y} />
+        <OptimizedRow key={y} row={row} />
       ))}
     </div>
   );
@@ -30,7 +30,6 @@ function Life(props: Props) {
 
 interface RowProps {
   row: Array<boolean>;
-  y: number;
 }
 
 function Row(props: RowProps) {
