@@ -30,11 +30,11 @@ export function getNextPopulation(grid: Array<Array<any>>): Grid {
     for (let col = 0; col < grid[row].length; col += 1) {
       const isAlive = !!grid[row][col];
       const neighbors = getNeighbors(grid, row, col);
-      const alive = neighbors.filter((cell) => !!cell);
+      const liveNeighbors = neighbors.filter((cell) => !!cell);
 
-      if (alive.length === 3) {
+      if (liveNeighbors.length === 3) {
         next[row][col] = true;
-      } else if (alive.length === 2 && isAlive) {
+      } else if (liveNeighbors.length === 2 && isAlive) {
         next[row][col] = true;
       } else {
         next[row][col] = false;
