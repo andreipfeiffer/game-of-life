@@ -18,7 +18,7 @@ export function getInitialState(
   return result;
 }
 
-export function getNextPopulation(grid: Array<Array<any>>): Grid {
+export function getNextPopulation(grid: Grid): Grid {
   window.performance.mark("calculateNextTickStart");
 
   const next: Grid = [];
@@ -40,8 +40,8 @@ export function getNextPopulation(grid: Array<Array<any>>): Grid {
         next[row][col] = false;
       }
 
+      // mark that the row has changed
       if (next[row][col] !== grid[row][col]) {
-        // mark that the row has changed
         isRowChanged = true;
       }
     }
