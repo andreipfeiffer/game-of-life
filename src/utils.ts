@@ -19,7 +19,7 @@ export function getInitialState(
 }
 
 export function getNextPopulation(grid: Grid): Grid {
-  window.performance.mark("calculateNextTickStart");
+  window.performance.mark("getNextPopulationStart");
 
   const next: Grid = [];
 
@@ -53,11 +53,11 @@ export function getNextPopulation(grid: Grid): Grid {
     }
   }
 
-  window.performance.mark("calculateNextTickEnd");
+  window.performance.mark("getNextPopulationEnd");
   window.performance.measure(
-    "calculateNextTick",
-    "calculateNextTickStart",
-    "calculateNextTickEnd"
+    "🐌 getNextPopulation",
+    "getNextPopulationStart",
+    "getNextPopulationEnd"
   );
 
   return next;
