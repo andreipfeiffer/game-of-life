@@ -103,6 +103,14 @@ function Settings(props: Props) {
         <button onClick={() => dispatch({ type: "TOGGLE_PLAY" })}>
           {play ? "Stop" : "Play"}
         </button>{" "}
+        {preset && (
+          <button
+            onClick={() => loadPreset(preset)}
+            style={{ marginLeft: "-1px" }}
+          >
+            ↺
+          </button>
+        )}
         <input
           type="range"
           value={lifetime}
