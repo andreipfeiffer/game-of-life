@@ -41,6 +41,7 @@ function Settings(props: Props) {
   useEffect(() => {
     const initialPreset = window.localStorage.getItem("presetId") || "";
     initialPreset && loadPreset(initialPreset);
+    // eslint-disable-next-line
   }, []);
 
   return (
