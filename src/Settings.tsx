@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Preset } from "./types";
 import "./Life.css";
 import { Store, Action, Renderer } from "./store";
@@ -37,6 +37,11 @@ function Settings(props: Props) {
     preset,
     population,
   } = store;
+
+  useEffect(() => {
+    const initialPreset = window.localStorage.getItem("presetId") || "";
+    initialPreset && loadPreset(initialPreset);
+  }, []);
 
   return (
     <div>
@@ -147,6 +152,8 @@ function Settings(props: Props) {
     dispatch({ type: "SET_HEIGHT", payload: newHeight });
     dispatch({ type: "SET_SIZE", payload: newSize });
     dispatch({ type: "SET_PRESET", payload: id });
+
+    window.localStorage.setItem("presetId", id);
 
     dispatch({
       type: "SET_POPULATION",
