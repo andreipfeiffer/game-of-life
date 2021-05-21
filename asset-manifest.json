@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.css": "/game-of-life/static/css/main.26ae9394.chunk.css",
-    "main.js": "/game-of-life/static/js/main.d1c9beb5.chunk.js",
-    "main.js.map": "/game-of-life/static/js/main.d1c9beb5.chunk.js.map",
-    "runtime-main.js": "/game-of-life/static/js/runtime-main.56edbf87.js",
-    "runtime-main.js.map": "/game-of-life/static/js/runtime-main.56edbf87.js.map",
-    "static/js/2.5f05892d.chunk.js": "/game-of-life/static/js/2.5f05892d.chunk.js",
-    "static/js/2.5f05892d.chunk.js.map": "/game-of-life/static/js/2.5f05892d.chunk.js.map",
+    "main.css": "/game-of-life/static/css/main.af0b0e06.chunk.css",
+    "main.js": "/game-of-life/static/js/main.01c3bf41.chunk.js",
+    "main.js.map": "/game-of-life/static/js/main.01c3bf41.chunk.js.map",
+    "runtime-main.js": "/game-of-life/static/js/runtime-main.ceb49434.js",
+    "runtime-main.js.map": "/game-of-life/static/js/runtime-main.ceb49434.js.map",
+    "static/js/2.8639d502.chunk.js": "/game-of-life/static/js/2.8639d502.chunk.js",
+    "static/js/2.8639d502.chunk.js.map": "/game-of-life/static/js/2.8639d502.chunk.js.map",
     "index.html": "/game-of-life/index.html",
-    "precache-manifest.1d1f50b996bb602951d9bae8033a4ec9.js": "/game-of-life/precache-manifest.1d1f50b996bb602951d9bae8033a4ec9.js",
-    "service-worker.js": "/game-of-life/service-worker.js",
-    "static/css/main.26ae9394.chunk.css.map": "/game-of-life/static/css/main.26ae9394.chunk.css.map",
-    "static/js/2.5f05892d.chunk.js.LICENSE.txt": "/game-of-life/static/js/2.5f05892d.chunk.js.LICENSE.txt"
+    "static/css/main.af0b0e06.chunk.css.map": "/game-of-life/static/css/main.af0b0e06.chunk.css.map",
+    "static/js/2.8639d502.chunk.js.LICENSE.txt": "/game-of-life/static/js/2.8639d502.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.56edbf87.js",
-    "static/js/2.5f05892d.chunk.js",
-    "static/css/main.26ae9394.chunk.css",
-    "static/js/main.d1c9beb5.chunk.js"
+    "static/js/runtime-main.ceb49434.js",
+    "static/js/2.8639d502.chunk.js",
+    "static/css/main.af0b0e06.chunk.css",
+    "static/js/main.01c3bf41.chunk.js"
   ]
 }
